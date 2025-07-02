@@ -9,7 +9,7 @@ RUN apt-get update -qq && \
       yarn \
       git \
       curl \
-      libyaml-dev \ 
+      libyaml-dev \
       tzdata && \
     rm -rf /var/lib/apt/lists/*
 
