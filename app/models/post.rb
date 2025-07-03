@@ -13,5 +13,4 @@ class Post < ApplicationRecord
     errors.add(:tags, "must have at least one tag") if tags.empty?
   end
   # validates :tags, length: { minimum: 1, message: "must have at least one tag" }
-
 end

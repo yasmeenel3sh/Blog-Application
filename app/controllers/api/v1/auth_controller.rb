@@ -1,5 +1,5 @@
 class Api::V1::AuthController < ApplicationController
-  skip_before_action :authorize_request, only: [:signup, :login]
+  skip_before_action :authorize_request, only: [ :signup, :login ]
 
   # POST /signup
   def signup

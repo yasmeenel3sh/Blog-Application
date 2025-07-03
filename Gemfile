@@ -11,7 +11,7 @@ gem "puma", ">= 5.0"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
-gem 'jwt', '~> 3.1', '>= 3.1.2'
+gem "jwt", "~> 3.1", ">= 3.1.2"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 group :development, :test do
-  gem 'rspec-rails', '~> 8.0', '>= 8.0.1'
+  gem "rspec-rails", "~> 8.0", ">= 8.0.1"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -49,7 +49,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
 # blog application background jobs
-gem 'sidekiq', '~> 8.0', '>= 8.0.5'
-gem 'redis', '~> 5.4'
-
+gem "sidekiq", "~> 8.0", ">= 8.0.5"
+gem "redis", "~> 5.4"
 end

@@ -1,16 +1,16 @@
 class Api::V1::PostsController < ApplicationController
   before_action :authorize_request
-  before_action :set_post, only: [:show, :update, :destroy]
-  before_action :check_owner, only: [:update, :destroy]
+  before_action :set_post, only: [ :show, :update, :destroy ]
+  before_action :check_owner, only: [ :update, :destroy ]
 
   def index
     # Eager loading for performance
     posts = Post.includes(:tags, :comments).all
-    render json: posts, include: [:tags, :comments]
+    render json: posts, include: [ :tags, :comments ]
   end
 
   def show
-    render json: @post, include: [:tags, :comments]
+    render json: @post, include: [ :tags, :comments ]
   end
 
   def create
@@ -47,6 +47,7 @@ class Api::V1::PostsController < ApplicationController
     @post = Post.find(params[:id])
     unless @post
         render json: { error: "Post not found" }, status: :not_found
+    end
   end
 
   def check_owner

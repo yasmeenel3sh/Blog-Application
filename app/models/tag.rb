@@ -3,6 +3,4 @@ class Tag < ApplicationRecord
     has_many :posts, through: :post_tags
 
     validates :name, presence: true, uniqueness: { case_sensitive: false }
-
-
 end
