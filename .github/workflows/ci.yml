@@ -1,3 +1,81 @@
+# name: CI
+
+# on:
+#   pull_request:
+#   push:
+#     branches: [ main ]
+
+# jobs:
+#   scan_ruby:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: .ruby-version
+#           bundler-cache: true
+
+#       - name: Scan for common Rails security vulnerabilities using static analysis
+#         run: bin/brakeman --no-pager
+
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: .ruby-version
+#           bundler-cache: true
+
+#       - name: Lint code for consistent style
+#         run: bin/rubocop -f github
+
+#   test:
+#     runs-on: ubuntu-latest
+
+#     services:
+#       postgres:
+#         image: postgres
+#         env:
+#           POSTGRES_USER: postgres
+#           POSTGRES_PASSWORD: postgres
+#         ports:
+#           - 5432:5432
+#         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
+#       # redis:
+#       #   image: redis
+#       #   ports:
+#       #     - 6379:6379
+#       #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+#     steps:
+#       - name: Install packages
+#         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config
+
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: .ruby-version
+#           bundler-cache: true
+
+#       - name: Run tests
+#         env:
+#           RAILS_ENV: test
+#           DATABASE_URL: postgres://postgres:postgres@localhost:5432
+#           # REDIS_URL: redis://localhost:6379/0
+#         run: bin/rails db:test:prepare test
+
 name: CI
 
 on:
@@ -24,6 +102,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,56 +119,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-  services:
-    postgres:
-      image: postgres:17
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: blog_app_test
-      ports:
-        - 5432:5432
-      options: >-
-        --health-cmd "pg_isready -U postgres"
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: blog_app_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
-    redis:
-      image: redis:8
-      ports:
-        - 6379:6379
-      options: >-
-        --health-cmd "redis-cli ping"
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
-
-    # env:
-    #   RAILS_ENV: test
-    #   POSTGRES_HOST: localhost
-    #   POSTGRES_USER: postgres
-    #   POSTGRES_PASSWORD: password
-    #   POSTGRES_DB: blog_app_test
-    #   DATABASE_URL: postgres://postgres:password@localhost:5432/blog_app_test
-    #   REDIS_URL: redis://localhost:6379/1
-
-
-    # services:
-    #   postgres:
-    #     image: postgres
-    #     env:
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: postgres
-    #     ports:
-    #       - 5432:5432
-    #     options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-
-    #   # redis:
-    #   #   image: redis
-    #   #   ports:
-    #   #     - 6379:6379
-    #   #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:8
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Install packages
@@ -107,6 +160,11 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST: localhost
+          DATABASE_URL: postgres://postgres:password@localhost:5432/blog_app_test
+          REDIS_URL: redis://localhost:6379/1
+        run: |
+          bin/rails db:prepare
+          bin/rspec
