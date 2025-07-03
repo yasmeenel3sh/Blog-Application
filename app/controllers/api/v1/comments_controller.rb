@@ -1,7 +1,7 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :authorize_request
   before_action :set_comment, only: [ :update, :destroy ]
   before_action :check_owner, only: [ :update, :destroy ]
+
 
   def create
     comment = @current_user.comments.build(comment_params)
@@ -33,6 +33,9 @@ class Api::V1::CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
+    unless @comment
+        render json: { error: "Comment not found" }, status: :not_found
+    end
   end
 
   def check_owner
