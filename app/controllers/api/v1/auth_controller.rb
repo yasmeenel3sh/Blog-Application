@@ -6,7 +6,15 @@ class Api::V1::AuthController < ApplicationController
     user = User.new(user_params)
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { token:, user: user.slice(:id, :name, :email, :image) }, status: :created
+      render json: {
+        token: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image
+       }
+     }
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -17,7 +25,15 @@ class Api::V1::AuthController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { token:, user: user.slice(:id, :name, :email, :image) }
+      render json: {
+        token: token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image
+       }
+     }
     else
       render json: { error: "Invalid email or password" }, status: :unauthorized
     end
