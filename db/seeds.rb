@@ -16,7 +16,7 @@ User.find_or_create_by!(email: "test@example.com") do |user|
 end
 
 # Create some tags
-tags = %w[Rails  Ruby  API  Sidekiq].each do |tag_name|
+tags = %w[Rails Ruby API Sidekiq].each do |tag_name|
   Tag.find_or_create_by!(name: tag_name)
 end
 
