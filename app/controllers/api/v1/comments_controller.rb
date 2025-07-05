@@ -32,13 +32,11 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def set_comment
-    @comment = Comment.find(params[:id])
-    unless @comment
-        render json: { error: "Comment not found" }, status: :not_found
+    @comment = Comment.find_by(id: params[:id])
+    render json: { error: "Comment not found" }, status: :not_found unless @comment
     end
-  end
 
   def check_owner
-    render json: { error: "Unauthorized" }, status: :forbidden unless @comment.user == @current_user
+    render json: { error: "Forbidden, you are not the owner" }, status: :forbidden unless @comment.user == @current_user
   end
 end

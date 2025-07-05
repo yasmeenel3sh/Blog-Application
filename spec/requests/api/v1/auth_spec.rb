@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Auths", type: :request do
+RSpec.describe "Api::V1::Auths" do
   describe "POST /signup" do
     it "creates a user and returns a token (happy)" do
       post "/api/v1/signup", params: {
