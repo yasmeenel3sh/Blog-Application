@@ -43,13 +43,11 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:id])
-    unless @post
-        render json: { error: "Post not found" }, status: :not_found
-    end
+    @post = Post.find_by(id: params[:id])
+    render json: { error: "Post not found" }, status: :not_found unless @post
   end
 
   def check_owner
-    render json: { error: "Unauthorized" }, status: :forbidden unless @post.user == @current_user
+    render json: { error: "Forbidden, you are not the owner" }, status: :forbidden unless @post.user == @current_user
   end
 end

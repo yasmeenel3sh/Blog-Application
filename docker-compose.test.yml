@@ -9,7 +9,7 @@ services:
   test:
     build: .
     stdin_open: true       # Required for interactive mode
-    #tty: true              # Allocate a terminal
+    tty: true              # Allocate a terminal
     command: /bin/bash
     entrypoint: ./entrypoint.sh
     volumes:
