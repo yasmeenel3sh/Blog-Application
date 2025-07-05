@@ -45,7 +45,7 @@ docker compose -f docker-compose.test.yml run test bundle exec rspec
 
 ---
 
-## 🔐 Authentication
+## Authentication
 
 All API endpoints require authentication except for:
 
@@ -75,7 +75,7 @@ Posts are automatically deleted 24 hours after creation using a Sidekiq backgrou
 
 ---
 
-## 🧹 Cleanup
+## Cleanup
 
 To stop and remove containers:
 
