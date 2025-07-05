@@ -1,0 +1,24 @@
+services:
+  db_test:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: blog_app_test
+
+  test:
+    build: .
+    stdin_open: true       # Required for interactive mode
+    #tty: true              # Allocate a terminal
+    command: /bin/bash
+    entrypoint: ./entrypoint.sh
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - db_test
+    environment:
+      RAILS_ENV: test
+
+volumes:
+  bundle_cache:

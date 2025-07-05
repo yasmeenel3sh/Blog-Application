@@ -39,6 +39,18 @@ services:
     environment:
       RAILS_ENV: development
       REDIS_URL: redis://redis:6379/1
+  test:
+    build: .
+    command: bundle exec rspec
+    entrypoint: ./entrypoint.sh
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: test
+
 volumes:
   pgdata:
   bundle_cache:
