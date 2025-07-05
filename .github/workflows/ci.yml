@@ -116,34 +116,6 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-
-  # test:
-    # runs-on: ubuntu-latest
-
-    # services:
-    #   postgres:
-    #     image: postgres:17
-    #     env:
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: password
-    #       POSTGRES_DB: blog_app_test
-    #     ports:
-    #       - 5432:5432
-
-    #   redis:
-    #     image: redis:8
-    #     ports:
-    #       - 6379:6379
-
-    # steps:
-    #   - uses: actions/checkout@v4
-
-    #   - name: Set up Docker Compose
-    #     run: docker compose -f docker-compose.test.yml up -d --build
-
-    #   - name: Run tests inside the container
-    #     run: docker compose -f docker-compose.test.yml exec web bin/rails db:test:prepare && docker compose -f docker-compose.test.yml exec web bin/rspec
-
   test:
     runs-on: ubuntu-latest
 
@@ -154,20 +126,8 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
           POSTGRES_DB: blog_app_test
-        ports:
-          - 5432:5432
         options: >-
           --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-      redis:
-        image: redis:8
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd="redis-cli ping"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -192,7 +152,6 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_HOST: localhost
           DATABASE_URL: postgres://postgres:password@localhost:5432/blog_app_test
-          REDIS_URL: redis://localhost:6379/1
         run: |
           bin/rails db:prepare
           bin/rspec
