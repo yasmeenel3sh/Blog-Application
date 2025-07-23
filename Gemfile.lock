@@ -102,7 +102,7 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.12.2)
+    json (2.13.0)
     jwt (3.1.2)
       base64
     language_server-protocol (3.17.0.5)
@@ -193,7 +193,7 @@ GEM
       psych (>= 4.0.0)
     redis (5.4.0)
       redis-client (>= 0.22.0)
-    redis-client (0.25.0)
+    redis-client (0.25.1)
       connection_pool
     regexp_parser (2.10.0)
     reline (0.6.1)
@@ -245,7 +245,7 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    sidekiq (8.0.5)
+    sidekiq (8.0.6)
       connection_pool (>= 2.5.0)
       json (>= 2.9.0)
       logger (>= 1.6.2)
@@ -283,7 +283,7 @@ DEPENDENCIES
   redis (~> 5.4)
   rspec-rails (~> 8.0, >= 8.0.1)
   rubocop-rails-omakase
-  sidekiq (~> 8.0, >= 8.0.5)
+  sidekiq (~> 8.0)
 
 BUNDLED WITH
    2.6.7
