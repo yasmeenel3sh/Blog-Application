@@ -49,6 +49,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
 # blog application background jobs
-gem "sidekiq", "~> 8.0", ">= 8.0.5"
+gem "sidekiq", "~> 8.0"
 gem "redis", "~> 5.4"
 end
