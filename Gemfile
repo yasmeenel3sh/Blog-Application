@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 group :development, :test do
-  gem "rspec-rails", "~> 8.0", ">= 8.0.1"
+  gem "rspec-rails", "~> 8.0"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
